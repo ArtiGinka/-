@@ -1,4 +1,4 @@
-﻿#include<iostream>
+#include<iostream>
 #include<string>
 #include"passwordNote.h"
 using namespace std;
@@ -79,7 +79,8 @@ void Password::setNotePassword()
 	cout << "Please set the password to your password note." << endl;
 	string notePassword;
 	cin >> notePassword;
-	Password::mNotePassword = notePassword;
+	mNotePassword = notePassword;
+	mIsSetNotePassword = true;
 }
 
 //设置账号
@@ -110,15 +111,39 @@ void Password::showPassword() const
 {
 	if (mFilePasswordIsEmpty)
 	{
-		cout << "Nothing here!<<endl" << endl;
+		cout << "Nothing here!" << endl;
 	}
 	else
 	{
-		for (int i = 0; i < mNum; i++)
+		while (true)
 		{
-			cout << "Website or App:\t" << this->v[i].mName << endl;
-			cout << "Account:\t" << this->v[i].mAccount << endl;
-			cout << "Password:\t" << this->v[i].mPassword << endl;
+			cout << "Please enter the password to check your password note." << endl;
+			string temp;
+			cin >> temp;
+			if (temp == mNotePassword)
+			{
+				for (int i = 0; i < mNum; i++)
+				{
+					cout << "Website or App:\t" << this->v[i].mName << endl;
+					cout << "Account:\t" << this->v[i].mAccount << endl;
+					cout << "Password:\t" << this->v[i].mPassword << endl;
+				}
+				break;
+			}
+			else
+			{
+				cout << "Wrong!\nEnter 1 to try again or 2 to exit." << endl;
+				int choice = 0;
+				cin >> choice;
+				if (choice == 1)
+				{
+					continue;
+				}
+				else
+				{
+					break;
+				}
+			}
 		}
 	}
 	system("pause");
@@ -130,7 +155,9 @@ void Password::changePassword()
 {
 	if (mFilePasswordIsEmpty)
 	{
-		cout << "Nothing here!" << endl;
+		cout << "Nothing here!" << endl;	
+		system("pause");
+		system("cls");
 	}
 	else
 	{
@@ -218,6 +245,8 @@ void Password::showSinglePassword()
 	if (mFilePasswordIsEmpty)
 	{
 		cout << "Nothing here!" << endl;
+		system("pause");
+		system("cls");
 	}
 	else
 	{
@@ -257,34 +286,43 @@ void Password::showSinglePassword()
 //删除某条密码
 void Password::deleteSinglePassword()
 {
-	while (true)
+	if (mFilePasswordIsEmpty)
 	{
-		cout << "Please enter the name of the target Website/app or account whose password you want to delete:" << endl;
-		int index = findIndex();
-		if (index != -1)
+		cout << "Nothing here!" << endl;
+		system("pause");
+		system("cls");
+	}
+	else
+	{
+		while (true)
 		{
-			vector<Password>::iterator it = v.erase(v.begin() + index );
-			mNum--;
-			cout << "Done!" << endl;
-			this->savePassword();//同步更新到文件中
-			system("pause");
-			system("cls");
-			return;
-		}
-		else
-		{
-			cout << "404,wanna try again?\nEnter \"1\" to try again or \"2\" to exist." << endl;
-			int choice = 0;
-			cin >> choice;
-			if (choice == 1)
+			cout << "Please enter the name of the target Website/app or account whose password you want to delete:" << endl;
+			int index = findIndex();
+			if (index != -1)
 			{
+				vector<Password>::iterator it = v.erase(v.begin() + index);
+				mNum--;
+				cout << "Done!" << endl;
+				this->savePassword();//同步更新到文件中
+				system("pause");
 				system("cls");
-				continue;
+				return;
 			}
 			else
 			{
-				system("cls");
-				return;
+				cout << "404,wanna try again?\nEnter \"1\" to try again or \"2\" to exist." << endl;
+				int choice = 0;
+				cin >> choice;
+				if (choice == 1)
+				{
+					system("cls");
+					continue;
+				}
+				else
+				{
+					system("cls");
+					return;
+				}
 			}
 		}
 	}
@@ -293,24 +331,33 @@ void Password::deleteSinglePassword()
 //删除所有密码
 void Password::deleteAllPassword() 
 {
-	cout << "Are you sure?" << endl;
-	cout << "Enter 1 to going on or 2 to exist." << endl;
-	int temp = 0;
-	cin >> temp;
-	if (temp == 1)
+	if (mFilePasswordIsEmpty)
 	{
-		v.clear();
-		mNum = 0;
-		cout << "Done!" << endl;
-		this->savePassword();//同步更新到文件中
-		mFilePasswordIsEmpty = true;
+		cout << "Nothing here!" << endl;
 		system("pause");
 		system("cls");
 	}
 	else
 	{
-		system("cls");
-		return;
+		cout << "Are you sure?" << endl;
+		cout << "Enter 1 to going on or 2 to exist." << endl;
+		int temp = 0;
+		cin >> temp;
+		if (temp == 1)
+		{
+			v.clear();
+			mNum = 0;
+			cout << "Done!" << endl;
+			this->savePassword();//同步更新到文件中
+			mFilePasswordIsEmpty = true;
+			system("pause");
+			system("cls");
+		}
+		else
+		{
+			system("cls");
+			return;
+		}
 	}
 }
 
@@ -342,7 +389,7 @@ int Password::getPasswordNum()
 	int num = 0;
 	while (ifs >> name && ifs >> account && ifs >> password)
 	{
-		//统计现有人数
+		//统计现有密码数
 		num++;
 	}
 	return num;

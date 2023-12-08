@@ -19,18 +19,19 @@ private:
 	string mName;
 	string mAccount;
 	string mPassword;
-	static string mNotePassword;
+	static string mNotePassword;//查看所有密码所需的前置密码
 	static vector<Password>v;
 	static int mNum;//密码本中密码的数量
 	bool mFilePasswordIsEmpty;//判断密码本文件是否为空
 public:
+	bool mIsSetNotePassword=false;//前置密码是否设置
 	string getName() { return this->mName; }
 	string getAccount() { return this->mAccount; }
 	string getPassword() { return this->mPassword; }
 	Password();//默认构造函数
 	Password(string name, string account, string password);//有参构造函数
 	void showPasswordMenu();//显示密码本菜单
-	static void setNotePassword();//设置密码本密码
+	void setNotePassword();//设置密码本密码
 	void setAccount();//设置账号
 	void setPassword();//设置密码
 	void showPassword() const;//显示账号与密码

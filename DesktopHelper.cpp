@@ -1,4 +1,4 @@
-﻿#include<iostream>
+#include<iostream>
 using namespace std;
 #include"passwordNote.h"
 
@@ -36,6 +36,10 @@ int main()
 			bool judgePassword = true;
 			while (judgePassword)
 				{
+					if (!p.mIsSetNotePassword)
+					{
+						p.setNotePassword();
+					}
 					p.showPasswordMenu();
 					cout << "Choose what you wanna do." << endl;
 					int choicePassword = -1;
@@ -46,7 +50,7 @@ int main()
 						judgePassword=p.exitPassword();//退出密码本
 						break;
 					case 1:
-						p.addPassword();//添加密码
+							p.addPassword();//添加密码
 						break;
 					case 2:
 						p.changePassword();//修改密码

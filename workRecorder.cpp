@@ -28,7 +28,7 @@ void WorkRecorder::showMenu()
         cout << "2. Display All Records\n";
         cout << "3. Modify Record\n";
         cout << "4. Delete Record\n";
-        cout << "5.Tamato Clocks\n";
+        cout << "5. Tamato Clocks\n";
         cout << "6. Exit\n";
         int choice;
         cout << "Enter your choice (1-5): ";
@@ -56,6 +56,7 @@ void WorkRecorder::showMenu()
             return;
         default:
             cout << "Invalid choice. Please enter a number between 1 and 5.\n";
+            system("pause");
         }
     }
 
@@ -207,7 +208,7 @@ void WorkRecorder::modifyRecorder()
     cout << "Enter new location: ";
     cin >> location;
     cout << "Enter new content: ";
-    cin.ignore();  // Clear the input buffer
+    cin.ignore();  // 清空缓冲区
     getline(cin, content);
     records[index] = WorkRecord(date, time, location, content);
     cout << "Record modified successfully.\n";

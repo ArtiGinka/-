@@ -48,6 +48,7 @@ void BillNote::showBillNoteMenu()
 			break;
 		case 5:
 			this->showAllBill();
+			system("pause");
 			break;
 		case 6:
 			this->showBillInPeriod();
@@ -162,10 +163,6 @@ void BillNote::sortAllBill()
 			temp.mTips = d[i].mTips;
 			d[i].mTips = d[index].mTips;
 			d[index].mTips = temp.mTips;//备注交换
-
-			//temp.mNumBill = d[i].mNumBill;
-			//d[i].mNumBill = d[index].mNumBill;
-			//d[index].mNumBill = temp.mNumBill;//编号交换
 		}
 	}
 }
@@ -339,7 +336,6 @@ void BillNote::showAllBill() const
 	{
 		d[i].showBill();
 	}
-	system("pause");
 }
 
 
@@ -396,68 +392,6 @@ bool BillNote:: findDate(const string& date) const
 	return judge;
 }
 
-//显示某一年的账目，包括总收入总支出，结余
-//void BillNote::showBillByOneYear()
-//{
-//	//分别用于记录收入支出结余
-//	int sumIn = 0;
-//	int sumOut = 0;
-//	int sum = 0;
-//	cout << "Please enter the year:" << endl;
-//	//判断输入的年份是否合法
-//	string targetYear;
-//	cin >> targetYear;
-//	string year = "2000";
-//	bool DateOk = ((targetYear.length() == 4) && (targetYear >= year));
-//	if (!DateOk)
-//	{
-//		cout << "Wrong Time!" << endl;
-//		system("pause");
-//		return;
-//	}
-//	//判断输入的年份是否存在
-//	bool DateExist = false;
-//	for (int i = 0; i < this->d.size(); i++)
-//	{
-//		if (targetYear == this->d[i].mDate.substr(0, 4))
-//		{
-//			DateExist = true;
-//			break;
-//		}
-//	}
-//	if (DateExist==false)
-//	{
-//		cout << "404 NOT FOUND!" << endl;
-//		system("pause");
-//		return;
-//	}
-//	//分别进行统计
-//	for (int i = 0; i < this->d.size(); i++)
-//	{
-//		if (d[i].mDate.substr(0,4) == targetYear)
-//		{
-//			d[i].showBill();
-//			if (d[i].mMoney >= 0)
-//			{
-//				sumIn += d[i].mMoney;
-//			}
-//			else
-//			{
-//				sumOut += d[i].mMoney;
-//			}
-//		}
-//		else
-//		{
-//			continue;
-//		}
-//	}
-//	sum = sumIn + sumOut;
-//	cout << "Income:" << sumIn << "\tOutcome:" << sumOut << endl;
-//	cout << "Remaining:" << sum << endl;
-//	system("pause");
-//	return;
-//}
-
 
 
 //按周期进行展示账单
@@ -469,6 +403,7 @@ void BillNote::showBillInPeriod()
 		system("pause");
 		return;
 	}
+	showAllBill();
 	//分别用于记录收入支出结余
 	int sumIn = 0;
 	int sumOut = 0;

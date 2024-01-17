@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include<iostream>
 #include<fstream>
 #include<string>
@@ -20,7 +20,6 @@ private:
 	string mName;
 	string mAccount;
 	string mPassword;
-	//static string mNotePassword;//查看所有密码所需的前置密码
 	static vector<Password>v;
 	static int mNum;//密码本中密码的数量
 	bool mFilePasswordIsEmpty;//判断密码本文件是否为空

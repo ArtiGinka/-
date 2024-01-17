@@ -1,4 +1,4 @@
-#include "courseNote.h"
+﻿#include "courseNote.h"
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -670,7 +670,6 @@ void CourseNote::showMenuCourseNote()
 		cout <<setw(10)<<std::left<<string(10,'*')<< "Welcome to use  the course note!!!!" << setw(20) << std::right<< string(10, '*') << endl;
 		cout << setw(10) << std::left << string(10, '*') << "0.Exist" << setw(48) << std::right << string(10, '*') << endl;
 		cout << setw(10) << std::left << string(10, '*') << "1.Course Table" << setw(41) << std::right << string(10, '*') << endl;
-
 		cout << setw(10) << std::left << string(10, '*') << "2.Homework    " << setw(41) << std::right << string(10, '*') << endl;
 		cout << setw(10) << std::left << string(10, '*') << "3.Online Course    " << setw(41) << std::right << string(10, '*') << endl;
 		cout << string(65, '*') << endl;

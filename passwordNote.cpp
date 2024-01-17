@@ -12,23 +12,62 @@ using namespace std;
 				删除某条密码（√）；删除所有密码（√）；文件保存（√）；
 
 */
-string Password::mNotePassword = "0";
+//string Password::mNotePassword = "0";
 int Password::mNum = 0;
 vector<Password> Password::v(0);
 
 //显示密码本菜单
 void Password:: showPasswordMenu()
 {
-	cout << "**Welcome to ues the PasswordNote!" << endl;
-	cout << "**Choose what you wanna to do:" << endl;
-	cout << "**0:Exist the passwordnote." << endl;
-	cout << "**1:Add a password." << endl;
-	cout << "**2:Change a password." << endl;
-	cout << "**3:Show all password." << endl;
-	cout << "**4:Show a targer password." << endl;
-	cout << "**5:Delete all password." << endl;
-	cout << "**6:Delete a target password." << endl;
+	while (true)
+	{
+		cout << "**Welcome to ues the PasswordNote!" << endl;
+		system("date /T");
+		system("TIME /T");
+		cout << "The current password amount is:" << mNum << endl;
+		cout << "***************************************************************" << endl;
+		cout << "**           Choose what you wanna do!                       **" << endl;
+		cout << "**               1:Add a password.                           **" << endl;
+		cout << "**               2:Change a password.                        **" << endl;
+		cout << "**               3:Show all password.                        **" << endl;
+		cout << "**               4:Show a targer password.                   **" << endl;
+		cout << "**               5:Delete all password.                      **" << endl;
+		cout << "**               6:Delete a target password.                 **" << endl;
+		cout << "*****************0.Exist***************************************" << endl;
+		cout << "Choose what you wanna do." << endl;
+		int choicePassword = -1;
+		cin >> choicePassword;
+		switch (choicePassword)
+		{
+		case 0:
+			return;
+		case 1:
+			this->addPassword();//添加密码
+			break;
+		case 2:
+			this->changePassword();//修改密码
+			break;
+		case 3:
+			this->showPassword();//显示所有密码
+			break;
+		case 4:
+			this->showSinglePassword();////根据网站、app名查找密码或根据账号查找密码
+			break;
+		case 5:
+			this->deleteAllPassword();//删除所有密码
+			break;
+		case 6:
+			this->deleteSinglePassword();//删除某个密码
+			break;
+		default:
+			system("cls");
+			break;
+		}
+	}
 }
+
+
+
 
 //默认构造函数
 Password::Password()
@@ -60,7 +99,6 @@ Password::Password()
 	//情况三：文件存在且需要保存已有数据
 	int num = this->getPasswordNum();
 	mNum= num;
-	cout << "The current password amount is:" << mNum << endl;
 	//将文件中的数据存入vector容器
 	this->initialPassword();
 }
@@ -71,16 +109,6 @@ Password::Password(string name, string account, string password)
 	this->mName = name;
 	this->mAccount = account;
 	this->mPassword = password;
-}
-
-//设置密码本密码
-void Password::setNotePassword()
-{
-	cout << "Please set the password to your password note." << endl;
-	string notePassword;
-	cin >> notePassword;
-	mNotePassword = notePassword;
-	mIsSetNotePassword = true;
 }
 
 //设置账号
@@ -117,20 +145,20 @@ void Password::showPassword() const
 	{
 		while (true)
 		{
-			cout << "Please enter the password to check your password note." << endl;
-			string temp;
-			cin >> temp;
-			if (temp == mNotePassword)
-			{
+			//cout << "Please enter the password to check your password note." << endl;
+			//string temp;
+			//cin >> temp;
+			//if (temp == mNotePassword)
+			//{
 				for (int i = 0; i < mNum; i++)
 				{
-					cout << "Website or App:\t" << this->v[i].mName << endl;
-					cout << "Account:\t" << this->v[i].mAccount << endl;
-					cout << "Password:\t" << this->v[i].mPassword << endl;
+					cout << "Website or App:" << this->v[i].mName << "\t"
+					<< "Account:" << this->v[i].mAccount << "\t"
+					<< "Password:" << this->v[i].mPassword << endl;
 				}
 				break;
-			}
-			else
+			//}
+			/*else
 			{
 				cout << "Wrong!\nEnter 1 to try again or 2 to exit." << endl;
 				int choice = 0;
@@ -143,7 +171,7 @@ void Password::showPassword() const
 				{
 					break;
 				}
-			}
+			}*/
 		}
 	}
 	system("pause");
@@ -164,7 +192,7 @@ void Password::changePassword()
 		while (true)
 		{
 			cout << "Please enter the name of the target Website/app or account whose password you want to change:" << endl;
-			int index = findIndex();
+			int index = findIndexPassword();
 			if (index != -1)
 			{
 				cout << "Please enter the former password:" << endl;
@@ -177,6 +205,7 @@ void Password::changePassword()
 					cin >> newPassword;
 					this->v[index].mPassword = newPassword;
 					cout << "Done!" << endl;
+					this->savePassword();
 					system("pause");
 					system("cls");
 					return;
@@ -253,12 +282,12 @@ void Password::showSinglePassword()
 		while (true)
 		{
 			cout << "Please enter the name of the target Website/app or account whose password you want to find:" << endl;
-			int index = findIndex();
+			int index = findIndexPassword();
 			if (index != -1)
 			{
-				cout << "Website or App:\t" << v[index].mName << endl;
-				cout << "Account:\t" << v[index].mAccount << endl;
-				cout << "Password:\t" << v[index].mPassword << endl;
+				cout << "Website or App:\t" << v[index].mName << "\t"
+				<< "Account:\t" << v[index].mAccount << "\t"
+				<< "Password:\t" << v[index].mPassword << endl;
 				system("pause");
 				system("cls");
 				return;
@@ -297,7 +326,7 @@ void Password::deleteSinglePassword()
 		while (true)
 		{
 			cout << "Please enter the name of the target Website/app or account whose password you want to delete:" << endl;
-			int index = findIndex();
+			int index = findIndexPassword();
 			if (index != -1)
 			{
 				vector<Password>::iterator it = v.erase(v.begin() + index);
@@ -362,7 +391,7 @@ void Password::deleteAllPassword()
 }
 
 //查找密码是否存在并返回其在vector容器中的位置
-int Password::findIndex()
+int Password::findIndexPassword()
 {
 	string target;
 	cin >> target;
@@ -410,14 +439,7 @@ void Password:: initialPassword()
 	ifs.close();//关闭文件
 }
 
-//退出密码本
-bool Password::exitPassword()
-{
-	cout << "Thanks for using!" << endl;
-	system("pause");
-	system("cls");
-	return false;
-}
+
 
 //将密码保存到文件中
 void Password::savePassword()
@@ -427,7 +449,7 @@ void Password::savePassword()
 
 	for (int i = 0; i < this->mNum; i++)
 	{
-		ofs << v[i].mName << "\n" << v[i].mAccount << "\n" << v[i].mPassword<< endl;
+		ofs << v[i].mName << "\t" << v[i].mAccount << "\t" << v[i].mPassword<< endl;
 	}
 	ofs.close();
 }

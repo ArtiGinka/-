@@ -145,11 +145,6 @@ void Password::showPassword() const
 	{
 		while (true)
 		{
-			//cout << "Please enter the password to check your password note." << endl;
-			//string temp;
-			//cin >> temp;
-			//if (temp == mNotePassword)
-			//{
 				for (int i = 0; i < mNum; i++)
 				{
 					cout << "Website or App:" << this->v[i].mName << "\t"
@@ -157,21 +152,6 @@ void Password::showPassword() const
 					<< "Password:" << this->v[i].mPassword << endl;
 				}
 				break;
-			//}
-			/*else
-			{
-				cout << "Wrong!\nEnter 1 to try again or 2 to exit." << endl;
-				int choice = 0;
-				cin >> choice;
-				if (choice == 1)
-				{
-					continue;
-				}
-				else
-				{
-					break;
-				}
-			}*/
 		}
 	}
 	system("pause");
